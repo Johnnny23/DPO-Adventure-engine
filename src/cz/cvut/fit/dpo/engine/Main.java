@@ -11,7 +11,7 @@ package cz.cvut.fit.dpo.engine;
 public class Main {
     
     public static void main(String args[]){
-        
+        new Controller().executeControllLoop();
     
     }
 }

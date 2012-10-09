@@ -14,6 +14,8 @@ public class Room {
     
         private String name;
         private String description;
+        private boolean isLocked;
+        private Item unlockItem;
         private Collection <NPC> NPCs;
         private Collection <Item> items;
         private Collection <Room> neighbours;

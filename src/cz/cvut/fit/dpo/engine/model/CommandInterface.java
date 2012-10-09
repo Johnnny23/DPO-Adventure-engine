@@ -10,5 +10,6 @@ package cz.cvut.fit.dpo.engine.model;
  */
 public interface CommandInterface {
     
+        public enum commandType {GO , DROP, PICKUP, USE, TALK, UNDEFINED};
         public void execute();
 }
