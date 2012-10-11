@@ -7,6 +7,7 @@ package cz.cvut.fit.dpo.engine;
 import cz.cvut.fit.dpo.engine.model.Command;
 import cz.cvut.fit.dpo.engine.model.CommandInterface;
 import cz.cvut.fit.dpo.engine.model.Game;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,7 @@ public class Controller {
     
         private View viewGame;
         private Game modelGame;
+        private Command actualCommand;
         
         public void executeControllLoop(){
             viewGame = new View();
@@ -26,8 +28,8 @@ public class Controller {
             String returnMessage;
             while(true){
                 inputLine = sc.nextLine();
-                createCommand(inputLine);
-                returnMessage = modelGame.proccedCommand();
+                actualCommand = createCommand(inputLine);
+                returnMessage = modelGame.proccedCommand(actualCommand);
                 viewGame.displayMessage(returnMessage);
             }
         }
@@ -35,20 +37,21 @@ public class Controller {
     public Command createCommand(String inputLine) {
         System.out.println(inputLine);
         if(inputLine.trim() == null){
-            return new Command(CommandInterface.commandType.UNDEFINED);
+            return new Command(CommandInterface.commandType.UNDEFINED, null);
         }
-        String[] commandArguments = inputLine.split(" ", 2);
+        String[] commandArguments = inputLine.split(" ", 4); // 4 protože máme max čtyř slový příkaz :-)
         System.out.println(" aha" + commandArguments[0]);
             int iterator = 0;
             for(CommandInterface.commandType commandType : CommandInterface.commandType.values()){
                 if(commandType.toString().equalsIgnoreCase(commandArguments[0])){
-                    return new Command(commandType.values()[iterator]);
+                    String [] arguments = Arrays.copyOfRange(commandArguments, 1, commandArguments.length);
+                    return new Command(commandType.values()[iterator], arguments);
                 }
                 iterator++;
+                
             }
-        // tady dodělat parsování vstupu
         
-        return new Command(CommandInterface.commandType.UNDEFINED);
+        return new Command(CommandInterface.commandType.UNDEFINED, null);
     }
     
 }
