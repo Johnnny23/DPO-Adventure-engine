@@ -7,6 +7,9 @@ package cz.cvut.fit.dpo.engine;
 import cz.cvut.fit.dpo.engine.model.Command;
 import cz.cvut.fit.dpo.engine.model.CommandInterface;
 import cz.cvut.fit.dpo.engine.model.Game;
+import cz.cvut.fit.dpo.engine.model.Room;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,10 +22,11 @@ public class Controller {
         private View viewGame;
         private Game modelGame;
         private Command actualCommand;
+        private File file = new File("gameData_1");
         
-        public void executeControllLoop(){
+        public void executeControllLoop() throws FileNotFoundException, IOException{
             viewGame = new View();
-            modelGame = new Game();
+            modelGame = initGame();
             Scanner sc = new Scanner(System.in);
             String inputLine;
             String returnMessage;
@@ -40,7 +44,6 @@ public class Controller {
             return new Command(CommandInterface.commandType.UNDEFINED, null);
         }
         String[] commandArguments = inputLine.split(" ", 4); // 4 protože máme max čtyř slový příkaz :-)
-        System.out.println(" aha" + commandArguments[0]);
             int iterator = 0;
             for(CommandInterface.commandType commandType : CommandInterface.commandType.values()){
                 if(commandType.toString().equalsIgnoreCase(commandArguments[0])){
@@ -51,8 +54,22 @@ public class Controller {
                 
             }
         
-            //k
         return new Command(CommandInterface.commandType.UNDEFINED, null);
+    }
+
+    private Game initGame() throws FileNotFoundException, IOException { // můžem mu dát třeba parametr z příkazovky, tady to bude staticky
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr); // dodáme try catch finally
+        String line;
+        ArrayList<Room> tempList = new ArrayList<>();
+        
+        while((line = br.readLine()) != null){
+            //tady naparsovat vstup Room ze souboru a list předat kontruktoru Room
+            
+         
+        }
+        
+        return null;
     }
     
 }

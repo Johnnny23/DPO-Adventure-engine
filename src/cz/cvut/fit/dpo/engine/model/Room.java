@@ -18,5 +18,5 @@ public class Room {
         private Item unlockItem;
         private Collection <NPC> NPCs;
         private Collection <Item> items;
-        private Collection <Room> neighbours;
+        private Collection <String> neighbours;
 }
